@@ -158,6 +158,29 @@ function getPayerName(state, payerId) {
   return payerId === "me" ? state.meName : getPlayerName(state, payerId);
 }
 
+function applyResponsiveTableLabels() {
+  document.querySelectorAll(".table-wrap table").forEach((table) => {
+    const labels = Array.from(table.querySelectorAll("thead th")).map((headerCell) => headerCell.textContent.trim());
+    table.querySelectorAll("tbody tr").forEach((row) => {
+      Array.from(row.children).forEach((cell, index) => {
+        if (cell.tagName !== "TD") {
+          return;
+        }
+        if (cell.classList.contains("empty-row")) {
+          cell.removeAttribute("data-label");
+          return;
+        }
+        const label = labels[index];
+        if (label) {
+          cell.dataset.label = label;
+        } else {
+          cell.removeAttribute("data-label");
+        }
+      });
+    });
+  });
+}
+
 function computeBalances(state) {
   const stats = new Map(
     state.players.map((player) => [
@@ -438,6 +461,7 @@ async function renderAll() {
   renderBalanceTable(summary);
   renderSessionTable(state);
   renderPaymentTable(state);
+  applyResponsiveTableLabels();
 }
 
 window.addEventListener("storage", () => {

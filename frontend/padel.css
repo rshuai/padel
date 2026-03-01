@@ -24,6 +24,7 @@
 body {
   margin: 0;
   min-height: 100vh;
+  overflow-x: hidden;
   color: var(--ink);
   font-family: "Space Grotesk", "Segoe UI", sans-serif;
   text-align: left;
@@ -99,6 +100,7 @@ main {
 
 .card {
   grid-column: span 12;
+  min-width: 0;
   position: relative;
   background: var(--card);
   border: 1px solid var(--line);
@@ -460,7 +462,7 @@ button:disabled {
 
 table {
   width: 100%;
-  min-width: 680px;
+  min-width: 0;
   border-collapse: separate;
   border-spacing: 0;
   font-size: 0.88rem;
@@ -472,6 +474,8 @@ td {
   border-bottom: 1px solid var(--line);
   text-align: left;
   vertical-align: top;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 th {
@@ -579,5 +583,106 @@ body.view-only .players-card {
 
   .read-list li {
     border-radius: var(--radius-md);
+  }
+}
+
+@media (max-width: 760px) {
+  .hero,
+  main {
+    width: min(1180px, 96vw);
+  }
+
+  .table-wrap {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    overflow: visible;
+  }
+
+  table {
+    font-size: 0.86rem;
+  }
+
+  table thead {
+    display: none;
+  }
+
+  table tbody {
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  table tbody tr {
+    display: grid;
+    gap: 0.45rem;
+    border: 1px solid rgba(216, 207, 191, 0.95);
+    border-radius: var(--radius-md);
+    padding: 0.64rem;
+    background: #fffefb;
+  }
+
+  tbody tr:nth-child(even) td,
+  tbody tr:hover td {
+    background: transparent;
+  }
+
+  table td {
+    display: grid;
+    grid-template-columns: minmax(0, 43%) minmax(0, 1fr);
+    gap: 0.5rem;
+    padding: 0;
+    border-bottom: 0;
+  }
+
+  table td::before {
+    content: attr(data-label);
+    color: var(--ink-soft);
+    font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+
+  table td.empty-row {
+    display: block;
+    text-align: left;
+    padding: 0;
+  }
+
+  table td.empty-row::before {
+    content: none;
+  }
+
+  table td button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .card {
+    padding: 0.82rem;
+  }
+
+  .grid,
+  .form-grid,
+  .pill-grid,
+  .stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .amount-wrap {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .amount-wrap input {
+    grid-column: 1 / -1;
   }
 }

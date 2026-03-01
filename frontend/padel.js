@@ -219,6 +219,29 @@ function setFeedback(elementId, message, isError = false) {
   el.classList.toggle("error", Boolean(message) && isError);
 }
 
+function applyResponsiveTableLabels() {
+  document.querySelectorAll(".table-wrap table").forEach((table) => {
+    const labels = Array.from(table.querySelectorAll("thead th")).map((headerCell) => headerCell.textContent.trim());
+    table.querySelectorAll("tbody tr").forEach((row) => {
+      Array.from(row.children).forEach((cell, index) => {
+        if (cell.tagName !== "TD") {
+          return;
+        }
+        if (cell.classList.contains("empty-row")) {
+          cell.removeAttribute("data-label");
+          return;
+        }
+        const label = labels[index];
+        if (label) {
+          cell.dataset.label = label;
+        } else {
+          cell.removeAttribute("data-label");
+        }
+      });
+    });
+  });
+}
+
 function renderPlayers() {
   const meNameInput = document.getElementById("meNameInput");
   meNameInput.value = state.meName;
@@ -584,6 +607,7 @@ function renderAll() {
   renderBalanceTable(summary);
   renderSessionTable();
   renderPaymentTable();
+  applyResponsiveTableLabels();
 }
 
 function getSessionSelection() {
