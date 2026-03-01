@@ -578,9 +578,11 @@ function renderSessionTable() {
     const actionCell = document.createElement("td");
     const removeBtn = document.createElement("button");
     removeBtn.type = "button";
-    removeBtn.className = "subtle";
+    removeBtn.className = "subtle icon-delete-btn";
     removeBtn.dataset.sessionId = session.id;
-    removeBtn.textContent = "Delete";
+    removeBtn.textContent = "🗑";
+    removeBtn.setAttribute("aria-label", "Delete session");
+    removeBtn.title = "Delete session";
     actionCell.appendChild(removeBtn);
     tr.appendChild(actionCell);
 
@@ -621,9 +623,11 @@ function renderPaymentTable() {
     const actionCell = document.createElement("td");
     const removeBtn = document.createElement("button");
     removeBtn.type = "button";
-    removeBtn.className = "subtle";
+    removeBtn.className = "subtle icon-delete-btn";
     removeBtn.dataset.paymentId = payment.id;
-    removeBtn.textContent = "Delete";
+    removeBtn.textContent = "🗑";
+    removeBtn.setAttribute("aria-label", "Delete payment");
+    removeBtn.title = "Delete payment";
     actionCell.appendChild(removeBtn);
     tr.appendChild(actionCell);
 

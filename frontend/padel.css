@@ -313,6 +313,17 @@ button:disabled {
   background: linear-gradient(130deg, #e8f6f2, #dff1ec);
 }
 
+.icon-delete-btn {
+  width: 2.35rem;
+  min-height: 2.15rem;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  line-height: 1;
+}
+
 .danger {
   background: linear-gradient(130deg, #c24d56, var(--rose));
   box-shadow: 0 8px 18px rgba(138, 32, 42, 0.28);
@@ -656,6 +667,10 @@ body.view-only .players-card {
 
   table td button {
     width: 100%;
+  }
+
+  table td .icon-delete-btn {
+    width: 2.35rem;
   }
 }
 
