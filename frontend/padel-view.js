@@ -457,7 +457,7 @@ function renderStatus(state) {
     minute: "2-digit",
     second: "2-digit",
   });
-  statusEl.textContent = `Read-only snapshot. Last refreshed ${refreshedAt}.`;
+  statusEl.textContent = `Read-only snapshot. Last update ${refreshedAt}.`;
 }
 
 async function renderAll() {
