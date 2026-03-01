@@ -449,11 +449,15 @@ function renderStatus(state) {
     statusEl.textContent = "No saved tracker data found yet. Add data in the editable app first.";
     return;
   }
-  statusEl.textContent = `Read-only snapshot. Last refreshed ${new Date().toLocaleTimeString("en-GB", {
+  const refreshedAt = new Date().toLocaleString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
-  })}.`;
+  });
+  statusEl.textContent = `Read-only snapshot. Last refreshed ${refreshedAt}.`;
 }
 
 async function renderAll() {

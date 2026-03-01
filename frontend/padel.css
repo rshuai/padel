@@ -123,10 +123,10 @@ video {
 
 .hero-actions {
   grid-column: 2;
-  grid-row: 1;
+  grid-row: 4;
   justify-self: end;
-  align-self: start;
-  margin-top: 0;
+  align-self: end;
+  margin-top: 0.2rem;
 }
 
 .hero-icon-link {
@@ -890,8 +890,9 @@ body.view-only .players-card {
 
   .hero-actions {
     grid-column: 2;
-    grid-row: 1;
-    margin-top: 0;
+    grid-row: 4;
+    align-self: end;
+    margin-top: 0.12rem;
   }
 
   .hero-icon-link {
@@ -1074,7 +1075,9 @@ body.view-only .players-card {
   }
 
   .hero-actions {
-    margin-top: 0;
+    grid-row: 4;
+    align-self: end;
+    margin-top: 0.08rem;
   }
 
   .hero::after {
