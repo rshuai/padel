@@ -179,7 +179,7 @@ function ensureEditAccess() {
     // Fall through to prompt-based auth check.
   }
 
-  const input = window.prompt("Enter password to edit padel expenses:");
+  const input = window.prompt("Enter password to edit Wincheap padel expenses:");
   if (input === EDIT_PASSWORD) {
     try {
       window.sessionStorage.setItem(EDIT_AUTH_KEY, "ok");
@@ -777,7 +777,7 @@ function onDeletePayment(event) {
 }
 
 function onReset() {
-  if (!window.confirm("Reset all padel tracker data? This cannot be undone.")) {
+  if (!window.confirm("Reset all Wincheap padel tracker data? This cannot be undone.")) {
     return;
   }
   state = makeDefaultState();
