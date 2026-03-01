@@ -249,7 +249,7 @@ video {
   height: auto;
   border: var(--stroke-strong) solid var(--ink);
   border-radius: 999px;
-  background: linear-gradient(145deg, var(--amber), #e69850);
+  background: linear-gradient(145deg, #f6ff6a, #c8de2d);
   box-shadow: var(--shadow-hard-sm);
   position: relative;
   flex: 0 0 auto;
