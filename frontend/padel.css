@@ -165,6 +165,10 @@ main {
   grid-column: span 4;
 }
 
+.data-card {
+  grid-column: span 12;
+}
+
 .sessions-history-card,
 .payments-history-card {
   grid-column: span 6;
@@ -227,7 +231,8 @@ button {
 }
 
 input,
-select {
+select,
+textarea {
   width: 100%;
   min-height: 42px;
   border: 1px solid var(--line);
@@ -240,11 +245,17 @@ select {
 }
 
 input:focus,
-select:focus {
+select:focus,
+textarea:focus {
   outline: none;
   border-color: rgba(18, 107, 103, 0.65);
   box-shadow: 0 0 0 3px rgba(18, 107, 103, 0.16);
   background: #fff;
+}
+
+textarea {
+  min-height: 130px;
+  resize: vertical;
 }
 
 button {
@@ -364,6 +375,16 @@ button:disabled {
 .amount-wrap .subtle {
   min-width: 56px;
   padding-inline: 0.6rem;
+}
+
+.actions-row {
+  display: flex;
+  gap: 0.52rem;
+  flex-wrap: wrap;
+}
+
+.actions-row button {
+  width: auto;
 }
 
 .feedback {
@@ -519,6 +540,7 @@ body.view-only .players-card {
   .players-card,
   .session-card,
   .payment-card,
+  .data-card,
   .sessions-history-card,
   .payments-history-card {
     grid-column: span 6;
@@ -534,6 +556,7 @@ body.view-only .players-card {
   .players-card,
   .session-card,
   .payment-card,
+  .data-card,
   .sessions-history-card,
   .payments-history-card,
   .danger-zone {

@@ -135,6 +135,30 @@
         <p id="paymentFeedback" class="feedback" aria-live="polite"></p>
       </section>
 
+      <section class="card data-card">
+        <h2>Data Tools</h2>
+        <p class="hint">Export from local app, then import into live app.</p>
+        <div class="actions-row">
+          <button id="exportDataBtn" type="button">Export JSON</button>
+          <button id="copyDataBtn" type="button" class="subtle">Copy JSON</button>
+        </div>
+        <div class="form-grid">
+          <label class="full">
+            Import JSON (paste below)
+            <textarea id="importJsonText" placeholder='Paste JSON from "Export JSON" or clipboard'></textarea>
+          </label>
+          <label class="full">
+            Or import from file
+            <input id="importFileInput" type="file" accept="application/json,.json" />
+          </label>
+          <div class="actions-row">
+            <button id="importDataBtn" type="button">Import Data</button>
+            <button id="clearImportBtn" type="button" class="subtle">Clear</button>
+          </div>
+        </div>
+        <p id="importFeedback" class="feedback" aria-live="polite"></p>
+      </section>
+
       <section class="card sessions-history-card">
         <h2>Session History</h2>
         <div class="table-wrap">

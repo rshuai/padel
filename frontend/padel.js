@@ -142,6 +142,10 @@ function saveState() {
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
+function exportStateJson() {
+  return JSON.stringify(state, null, 2);
+}
+
 function ensureEditAccess() {
   try {
     if (window.sessionStorage.getItem(EDIT_AUTH_KEY) === "ok") {
@@ -692,6 +696,78 @@ function onReset() {
   setFeedback("playerFeedback", "Tracker reset.");
 }
 
+async function onCopyData() {
+  const data = exportStateJson();
+  try {
+    await navigator.clipboard.writeText(data);
+    setFeedback("importFeedback", "JSON copied to clipboard.");
+  } catch {
+    setFeedback("importFeedback", "Clipboard access blocked. Use Export JSON instead.", true);
+  }
+}
+
+function onExportData() {
+  const data = exportStateJson();
+  const blob = new Blob([data], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = `padel-data-${todayIso()}.json`;
+  document.body.appendChild(anchor);
+  anchor.click();
+  anchor.remove();
+  URL.revokeObjectURL(url);
+  setFeedback("importFeedback", "Exported JSON file.");
+}
+
+function applyImportedText(text) {
+  const raw = text.trim();
+  if (!raw) {
+    throw new Error("Paste JSON first, or choose a JSON file.");
+  }
+  const parsed = JSON.parse(raw);
+  const imported = normalizeState(parsed);
+  state = imported;
+  saveState();
+  renderAll();
+  setFeedback("importFeedback", "Data imported successfully.");
+}
+
+function onImportData() {
+  setFeedback("importFeedback", "");
+  const input = document.getElementById("importJsonText");
+  try {
+    applyImportedText(input.value);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Invalid JSON.";
+    setFeedback("importFeedback", message, true);
+  }
+}
+
+function onImportFileChange(event) {
+  const target = event.target;
+  if (!(target instanceof HTMLInputElement) || !target.files || !target.files[0]) {
+    return;
+  }
+  const file = target.files[0];
+  const reader = new FileReader();
+  reader.onload = () => {
+    const content = typeof reader.result === "string" ? reader.result : "";
+    document.getElementById("importJsonText").value = content;
+    setFeedback("importFeedback", `Loaded ${file.name}. Click "Import Data" to apply.`);
+  };
+  reader.onerror = () => {
+    setFeedback("importFeedback", `Could not read ${file.name}.`, true);
+  };
+  reader.readAsText(file);
+}
+
+function onClearImport() {
+  document.getElementById("importJsonText").value = "";
+  document.getElementById("importFileInput").value = "";
+  setFeedback("importFeedback", "");
+}
+
 let state = loadState();
 
 function init() {
@@ -714,6 +790,11 @@ function init() {
   document.getElementById("sessionsTable").addEventListener("click", onDeleteSession);
   document.getElementById("paymentsTable").addEventListener("click", onDeletePayment);
   document.getElementById("resetBtn").addEventListener("click", onReset);
+  document.getElementById("exportDataBtn").addEventListener("click", onExportData);
+  document.getElementById("copyDataBtn").addEventListener("click", onCopyData);
+  document.getElementById("importDataBtn").addEventListener("click", onImportData);
+  document.getElementById("importFileInput").addEventListener("change", onImportFileChange);
+  document.getElementById("clearImportBtn").addEventListener("click", onClearImport);
 }
 
 init();
