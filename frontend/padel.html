@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Padel Payment Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="padel.css" />
+  </head>
+  <body>
+    <div class="atmosphere" aria-hidden="true"></div>
+    <header class="hero">
+      <h1>Padel Payment Tracker</h1>
+      <p>Session is fixed at £48 (4 players, £12 each). Track debts, credits, and upfront payments.</p>
+    </header>
+
+    <main>
+      <section class="card overview-card">
+        <h2>Overview</h2>
+        <div class="stats">
+          <article class="stat">
+            <h3>Sessions Logged</h3>
+            <p id="sessionsCount">0</p>
+          </article>
+          <article class="stat">
+            <h3>Court Spend by You</h3>
+            <p id="yourSpend">£0.00</p>
+          </article>
+          <article class="stat">
+            <h3>Outstanding to You</h3>
+            <p id="owedToYou">£0.00</p>
+          </article>
+          <article class="stat">
+            <h3>You Owe Players</h3>
+            <p id="youOwe">£0.00</p>
+          </article>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Player</th>
+                <th>Sessions Played</th>
+                <th>Charged (You Paid)</th>
+                <th>Credit (They Paid)</th>
+                <th>Payments Net</th>
+                <th>Balance</th>
+              </tr>
+            </thead>
+            <tbody id="balancesTable"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card players-card">
+        <h2>Players</h2>
+        <div class="grid players-settings">
+          <label>
+            Your name
+            <input id="meNameInput" type="text" maxlength="50" />
+          </label>
+          <label>
+            Add player
+            <input id="newPlayerInput" type="text" maxlength="50" placeholder="e.g. Sam" />
+          </label>
+          <button id="addPlayerBtn" type="button">Add Player</button>
+        </div>
+        <div id="playersList" class="players-list"></div>
+        <p id="playerFeedback" class="feedback" aria-live="polite"></p>
+      </section>
+
+      <section class="card session-card">
+        <h2>Log Session</h2>
+        <p class="hint">Select exactly 4 players. Include yourself only if you played.</p>
+        <form id="sessionForm" class="form-grid">
+          <label>
+            Date
+            <input id="sessionDate" type="date" required />
+          </label>
+          <label>
+            Who paid £48?
+            <select id="sessionPayer"></select>
+          </label>
+          <label class="full">
+            Players in this session (4 total)
+            <div id="sessionPlayersPicker" class="pill-grid"></div>
+          </label>
+          <label class="full">
+            Note (optional)
+            <input id="sessionNote" type="text" maxlength="120" placeholder="Morning game at Riverside" />
+          </label>
+          <button type="submit">Add Session</button>
+        </form>
+        <p id="sessionFeedback" class="feedback" aria-live="polite"></p>
+      </section>
+
+      <section class="card payment-card">
+        <h2>Log Payment / Settlement</h2>
+        <form id="paymentForm" class="form-grid">
+          <label>
+            Date
+            <input id="paymentDate" type="date" required />
+          </label>
+          <label>
+            Player
+            <select id="paymentPlayer"></select>
+          </label>
+          <label>
+            Direction
+            <select id="paymentDirection">
+              <option value="to_me">Player paid me</option>
+              <option value="from_me">I paid player</option>
+            </select>
+          </label>
+          <label>
+            Amount (£)
+            <div class="amount-wrap">
+              <input id="paymentAmount" type="number" min="0.01" step="0.01" required />
+              <button id="quick12Btn" type="button" class="subtle">£12</button>
+              <button id="quick48Btn" type="button" class="subtle">£48</button>
+            </div>
+          </label>
+          <label class="full">
+            Note (optional)
+            <input id="paymentNote" type="text" maxlength="120" placeholder="Upfront for 4 sessions" />
+          </label>
+          <button type="submit">Add Payment</button>
+        </form>
+        <p id="paymentFeedback" class="feedback" aria-live="polite"></p>
+      </section>
+
+      <section class="card sessions-history-card">
+        <h2>Session History</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Players</th>
+                <th>Payer</th>
+                <th>Note</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="sessionsTable"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card payments-history-card">
+        <h2>Payment History</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Flow</th>
+                <th>Amount</th>
+                <th>Note</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="paymentsTable"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card danger-zone">
+        <h2>Danger Zone</h2>
+        <button id="resetBtn" type="button" class="danger">Reset All Data</button>
+      </section>
+    </main>
+
+    <script src="padel.js"></script>
+  </body>
+</html>

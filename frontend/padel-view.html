@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Padel Payment Tracker - View Only</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="padel.css" />
+  </head>
+  <body class="view-only">
+    <div class="atmosphere" aria-hidden="true"></div>
+    <header class="hero">
+      <h1>Padel Payment Tracker</h1>
+      <p>View-only mode. Session is fixed at £48 (4 players, £12 each).</p>
+      <p id="viewStatus" class="meta-line">Waiting for data...</p>
+    </header>
+
+    <main>
+      <section class="card overview-card">
+        <h2>Overview</h2>
+        <div class="stats">
+          <article class="stat">
+            <h3>Sessions Logged</h3>
+            <p id="sessionsCount">0</p>
+          </article>
+          <article class="stat">
+            <h3>Court Spend by You</h3>
+            <p id="yourSpend">£0.00</p>
+          </article>
+          <article class="stat">
+            <h3>Outstanding to You</h3>
+            <p id="owedToYou">£0.00</p>
+          </article>
+          <article class="stat">
+            <h3>You Owe Players</h3>
+            <p id="youOwe">£0.00</p>
+          </article>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Player</th>
+                <th>Sessions Played</th>
+                <th>Charged (You Paid)</th>
+                <th>Credit (They Paid)</th>
+                <th>Payments Net</th>
+                <th>Balance</th>
+              </tr>
+            </thead>
+            <tbody id="balancesTable"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card players-card">
+        <h2>Players</h2>
+        <p id="playersMeta" class="hint">No players yet.</p>
+        <ul id="playersReadList" class="read-list"></ul>
+      </section>
+
+      <section class="card sessions-history-card">
+        <h2>Session History</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Players</th>
+                <th>Payer</th>
+                <th>Note</th>
+              </tr>
+            </thead>
+            <tbody id="sessionsTable"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card payments-history-card">
+        <h2>Payment History</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Flow</th>
+                <th>Amount</th>
+                <th>Note</th>
+              </tr>
+            </thead>
+            <tbody id="paymentsTable"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="padel-view.js"></script>
+  </body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Writer</title>
+    <link rel="stylesheet" href="/ui/word-processor.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar card">
+        <div>
+          <h1>Simple Writer</h1>
+          <p>A clean word processor for distraction-free writing.</p>
+        </div>
+        <div id="saveStatus" class="status" aria-live="polite">Ready</div>
+      </header>
+
+      <section class="doc-controls card" aria-label="Document controls">
+        <label class="field">
+          Document title
+          <input id="docTitle" type="text" value="Untitled document" maxlength="120" />
+        </label>
+
+        <div class="action-row">
+          <button id="newDocBtn" type="button">New</button>
+          <button id="openBtn" type="button">Open</button>
+          <button id="saveTxtBtn" type="button">Export .txt</button>
+          <button id="saveHtmlBtn" type="button">Export .html</button>
+          <button id="printBtn" type="button">Print</button>
+        </div>
+
+        <input id="importFile" type="file" accept=".txt,.html,.htm,text/plain,text/html" hidden />
+      </section>
+
+      <section class="editor-shell card">
+        <div class="toolbar" role="toolbar" aria-label="Formatting toolbar">
+          <div class="toolbar-group">
+            <button type="button" class="tool" data-cmd="undo" title="Undo (Ctrl/Cmd+Z)">Undo</button>
+            <button type="button" class="tool" data-cmd="redo" title="Redo (Ctrl/Cmd+Shift+Z)">Redo</button>
+          </div>
+
+          <div class="toolbar-group">
+            <button type="button" class="tool" data-cmd="bold" title="Bold (Ctrl/Cmd+B)">Bold</button>
+            <button type="button" class="tool" data-cmd="italic" title="Italic (Ctrl/Cmd+I)">Italic</button>
+            <button type="button" class="tool" data-cmd="underline" title="Underline (Ctrl/Cmd+U)">Underline</button>
+            <button type="button" class="tool" data-cmd="strikeThrough" title="Strikethrough">Strike</button>
+            <button type="button" class="tool" data-action="clear-format" title="Remove formatting">Clear</button>
+          </div>
+
+          <div class="toolbar-group">
+            <label class="compact-label" for="blockFormat">Block</label>
+            <select id="blockFormat" class="tool-select" title="Block format">
+              <option value="p">Paragraph</option>
+              <option value="h1">Heading 1</option>
+              <option value="h2">Heading 2</option>
+              <option value="blockquote">Quote</option>
+              <option value="pre">Code</option>
+            </select>
+          </div>
+
+          <div class="toolbar-group">
+            <button type="button" class="tool" data-cmd="insertUnorderedList" title="Bulleted list">Bullets</button>
+            <button type="button" class="tool" data-cmd="insertOrderedList" title="Numbered list">Numbered</button>
+          </div>
+
+          <div class="toolbar-group">
+            <button type="button" class="tool" data-cmd="justifyLeft" title="Align left">Left</button>
+            <button type="button" class="tool" data-cmd="justifyCenter" title="Align center">Center</button>
+            <button type="button" class="tool" data-cmd="justifyRight" title="Align right">Right</button>
+          </div>
+        </div>
+
+        <article
+          id="editor"
+          contenteditable="true"
+          spellcheck="true"
+          data-placeholder="Start writing your document..."
+          aria-label="Document editor"
+        ></article>
+      </section>
+
+      <footer class="stats card" aria-live="polite">
+        <span><strong id="wordCount">0</strong> words</span>
+        <span><strong id="charCount">0</strong> characters</span>
+        <span id="readingTime">0 min read</span>
+      </footer>
+    </div>
+
+    <script src="/ui/word-processor.js"></script>
+  </body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Consolidation Controller</title>
+    <link rel="stylesheet" href="/ui/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Consolidation Controller</h1>
+      <p>IFRS / UK GAAP multi-entity consolidation with automated FX translation.</p>
+      <a class="quick-link" href="/ui/word-processor.html">Open Simple Writer</a>
+      <a class="quick-link" href="/ui/katanox.html">Open Katanox Basic App</a>
+      <a class="quick-link" href="/ui/padel.html">Open Padel Payment Tracker</a>
+    </header>
+
+    <main>
+      <section>
+        <h2>Security</h2>
+        <div class="grid">
+          <label>
+            API key
+            <input id="apiKey" type="password" placeholder="Optional in dev" />
+          </label>
+          <label>
+            Active engagement ID
+            <input id="engagementId" type="text" placeholder="Create or paste engagement ID" />
+          </label>
+        </div>
+      </section>
+
+      <section>
+        <h2>Step 1: Create Engagement</h2>
+        <div class="grid">
+          <label>
+            Engagement name
+            <input id="engagementName" type="text" placeholder="FY2025 Group Consolidation" />
+          </label>
+          <button id="createEngagementBtn">Create</button>
+        </div>
+        <pre id="engagementResult"></pre>
+      </section>
+
+      <section>
+        <h2>Step 2: Define Entities</h2>
+        <div class="grid two">
+          <label>
+            Entity name
+            <input id="entityName" type="text" placeholder="UK HoldCo" />
+          </label>
+          <label>
+            Functional currency
+            <input id="entityCurrency" type="text" placeholder="GBP" maxlength="3" />
+          </label>
+          <label>
+            Ownership % (0-1)
+            <input id="entityOwnership" type="number" min="0" max="1" step="0.0001" value="1" />
+          </label>
+          <label>
+            Has NCI
+            <select id="entityHasNci">
+              <option value="false">No</option>
+              <option value="true">Yes</option>
+            </select>
+          </label>
+          <label>
+            Include in scope
+            <select id="entityScope">
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </label>
+          <label>
+            Intercompany identifier
+            <input id="entityIcIdentifier" type="text" placeholder="Counterparty column or account prefix" />
+          </label>
+        </div>
+        <button id="addEntityBtn">Add Entity</button>
+        <button id="refreshEntitiesBtn">Refresh Entity List</button>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Currency</th>
+              <th>Ownership</th>
+              <th>NCI</th>
+              <th>In Scope</th>
+              <th>IC Identifier</th>
+            </tr>
+          </thead>
+          <tbody id="entitiesTable"></tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Step 3: Upload Files</h2>
+        <div class="grid two">
+          <label>
+            File type
+            <select id="uploadType">
+              <option value="ENTITY_TB">Entity Trial Balance</option>
+              <option value="ENTITY_GL">Entity GL Export</option>
+              <option value="CONSOLIDATION_TEMPLATE">Consolidation Template</option>
+              <option value="COA_MAPPING">COA Mapping</option>
+            </select>
+          </label>
+          <label>
+            Entity (required for TB/GL)
+            <select id="uploadEntity"></select>
+          </label>
+          <label class="full">
+            File
+            <input id="uploadFile" type="file" />
+          </label>
+        </div>
+        <button id="uploadBtn">Upload</button>
+        <pre id="uploadResult"></pre>
+      </section>
+
+      <section>
+        <h2>Step 4: Clarification Gate (Required)</h2>
+        <p>Processing is blocked until every required clarification item is complete.</p>
+        <div class="grid two">
+          <label>
+            Reporting period start
+            <input id="periodStart" type="date" />
+          </label>
+          <label>
+            Reporting period end
+            <input id="periodEnd" type="date" />
+          </label>
+          <label>
+            Presentation currency
+            <input id="presentationCurrency" type="text" value="USD" maxlength="3" />
+          </label>
+          <label>
+            Average methodology
+            <select id="averageMethod">
+              <option value="DAY_WEIGHTED">Day-weighted daily average</option>
+              <option value="SIMPLE_DAILY">Simple daily average</option>
+            </select>
+          </label>
+          <label>
+            Intercompany method
+            <select id="intercompanyMethod">
+              <option value="ACCOUNT_TAG">Account tag</option>
+              <option value="COUNTERPARTY_COLUMN">Counterparty column</option>
+              <option value="NONE">Not identifiable</option>
+            </select>
+          </label>
+        </div>
+        <button id="submitClarificationBtn">Submit Clarification</button>
+        <button id="checkClarificationBtn">Check Missing Items</button>
+        <pre id="clarificationResult"></pre>
+      </section>
+
+      <section>
+        <h2>Step 5: FX Transparency + Override</h2>
+        <button id="retrieveFxBtn">Retrieve FX Rates</button>
+        <table>
+          <thead>
+            <tr>
+              <th>Entity</th>
+              <th>Pair</th>
+              <th>Type</th>
+              <th>Date</th>
+              <th>Rate</th>
+              <th>Source</th>
+              <th>Methodology</th>
+              <th>Missing Days</th>
+              <th>Override</th>
+            </tr>
+          </thead>
+          <tbody id="fxTable"></tbody>
+        </table>
+
+        <div class="grid three">
+          <label>
+            Entity
+            <select id="overrideEntity"></select>
+          </label>
+          <label>
+            Rate type
+            <select id="overrideType">
+              <option value="CLOSING">Closing</option>
+              <option value="AVERAGE">Average</option>
+              <option value="HISTORICAL">Historical</option>
+            </select>
+          </label>
+          <label>
+            Rate date
+            <input id="overrideDate" type="date" />
+          </label>
+          <label>
+            Rate
+            <input id="overrideRate" type="number" min="0" step="0.00000001" />
+          </label>
+          <label class="full">
+            Note
+            <input id="overrideNote" type="text" placeholder="Reason for override" />
+          </label>
+        </div>
+        <button id="submitOverrideBtn">Save Override</button>
+      </section>
+
+      <section>
+        <h2>Step 6: Run Consolidation</h2>
+        <button id="runProcessBtn">Run Processing</button>
+        <pre id="processResult"></pre>
+      </section>
+
+      <section>
+        <h2>Outputs</h2>
+        <button id="refreshOutputsBtn">Refresh Outputs</button>
+        <ul id="outputsList"></ul>
+      </section>
+
+      <section>
+        <h2>Exceptions & Validation</h2>
+        <button id="refreshExceptionsBtn">Refresh Exceptions</button>
+        <table>
+          <thead>
+            <tr>
+              <th>Severity</th>
+              <th>Blocking</th>
+              <th>Category</th>
+              <th>Message</th>
+              <th>Entity</th>
+              <th>Account</th>
+            </tr>
+          </thead>
+          <tbody id="exceptionsTable"></tbody>
+        </table>
+      </section>
+    </main>
+
+    <script src="/ui/app.js"></script>
+  </body>
+</html>

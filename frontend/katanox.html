@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Katanox Basic App</title>
+    <link rel="stylesheet" href="/ui/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Katanox Basic App</h1>
+      <p>Search availability, list properties, and manage bookings through the Katanox API.</p>
+      <a class="quick-link" href="/">Back to Consolidation App</a>
+    </header>
+
+    <main>
+      <section>
+        <h2>Quick Start</h2>
+        <ol>
+          <li>Enter your Katanox token.</li>
+          <li>Use "Search Availability" to get offer IDs.</li>
+          <li>Paste an offer ID into the booking JSON and click "Create Booking".</li>
+        </ol>
+        <button id="testConnectionBtn">Test Local API Connection</button>
+        <pre id="connectionResult"></pre>
+      </section>
+
+      <section>
+        <h2>Credentials</h2>
+        <div class="grid two">
+          <label>
+            Local app API key (optional in dev)
+            <input id="apiKey" type="password" placeholder="X-API-Key" />
+          </label>
+          <label>
+            Katanox API token
+            <input id="katanoxToken" type="password" placeholder="Bearer token or raw token" />
+          </label>
+        </div>
+      </section>
+
+      <section>
+        <h2>Properties</h2>
+        <div class="grid two">
+          <label class="full">
+            Property IDs (comma-separated, optional)
+            <input id="propertyIds" type="text" placeholder="ABC123, DEF456" />
+          </label>
+        </div>
+        <button id="fetchPropertiesBtn">Fetch Properties</button>
+        <pre id="propertiesResult"></pre>
+      </section>
+
+      <section>
+        <h2>Availability</h2>
+        <div class="grid two">
+          <label>
+            Check-in
+            <input id="checkIn" type="date" />
+          </label>
+          <label>
+            Check-out
+            <input id="checkOut" type="date" />
+          </label>
+          <label>
+            Adults
+            <input id="adults" type="number" min="1" value="1" />
+          </label>
+          <label>
+            Children
+            <input id="children" type="number" min="0" value="0" />
+          </label>
+          <label>
+            Property IDs (comma-separated)
+            <input id="availabilityPropertyIds" type="text" placeholder="Use either this..." />
+          </label>
+          <label>
+            Latitude
+            <input id="lat" type="number" step="0.000001" placeholder="...or coordinates" />
+          </label>
+          <label>
+            Longitude
+            <input id="lng" type="number" step="0.000001" />
+          </label>
+          <label>
+            Radius (meters)
+            <input id="radius" type="number" min="1" value="2000" />
+          </label>
+          <label>
+            Number of units
+            <input id="numberOfUnits" type="number" min="1" value="1" />
+          </label>
+          <label>
+            Page
+            <input id="page" type="number" min="0" value="0" />
+          </label>
+          <label>
+            Limit
+            <input id="limit" type="number" min="1" max="50" value="10" />
+          </label>
+          <label>
+            Corporate profile ID (optional)
+            <input id="corporateProfileId" type="text" />
+          </label>
+          <label>
+            Unit type (optional)
+            <input id="unitType" type="text" />
+          </label>
+          <label>
+            Occupancy (optional)
+            <input id="occupancy" type="text" placeholder="2-5;8" />
+          </label>
+          <label class="inline-checkbox">
+            <input id="lowest" type="checkbox" />
+            Only lowest offer per property
+          </label>
+          <label class="inline-checkbox">
+            <input id="priceBreakdown" type="checkbox" />
+            Include nightly price breakdown
+          </label>
+          <label class="inline-checkbox">
+            <input id="separateRatesPerPayment" type="checkbox" />
+            Split offers by payment mode
+          </label>
+        </div>
+        <button id="searchAvailabilityBtn">Search Availability</button>
+        <pre id="availabilityResult"></pre>
+      </section>
+
+      <section>
+        <h2>Booking Lookup</h2>
+        <div class="grid two">
+          <label>
+            Booking ID
+            <input id="bookingId" type="text" placeholder="BK-XXXXXXX" />
+          </label>
+        </div>
+        <button id="fetchBookingBtn">Fetch Booking</button>
+        <pre id="bookingResult"></pre>
+      </section>
+
+      <section>
+        <h2>Create Booking (JSON)</h2>
+        <label>
+          Booking payload
+          <textarea id="bookingPayload" rows="18"></textarea>
+        </label>
+        <button id="createBookingBtn">Create Booking</button>
+        <pre id="createBookingResult"></pre>
+      </section>
+    </main>
+
+    <script src="/ui/katanox.js"></script>
+  </body>
+</html>

@@ -1,0 +1,297 @@
+:root {
+  --bg: #f2eee7;
+  --bg-accent: #e5f0e8;
+  --card: #fffdf8;
+  --ink: #1f2a37;
+  --muted: #5c6b76;
+  --line: #d4d7cc;
+  --brand: #165d4b;
+  --brand-soft: #d8efe8;
+  --warn: #ad5c00;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "IBM Plex Sans", "Avenir Next", "Futura", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 12% 8%, rgba(22, 93, 75, 0.12), transparent 26%),
+    radial-gradient(circle at 88% 0%, rgba(173, 92, 0, 0.09), transparent 22%),
+    linear-gradient(160deg, var(--bg) 0%, var(--bg-accent) 100%);
+}
+
+.app-shell {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 1.1rem;
+  display: grid;
+  gap: 0.9rem;
+  animation: rise-in 420ms ease;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 10px 24px rgba(23, 43, 28, 0.06);
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 1.1rem;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 1.45rem;
+  letter-spacing: 0.01em;
+}
+
+.topbar p {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.status {
+  white-space: nowrap;
+  border: 1px solid #beded5;
+  background: #edf8f4;
+  color: #154638;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.status.saving {
+  border-color: #f0d7b7;
+  background: #fff5e8;
+  color: var(--warn);
+}
+
+.doc-controls {
+  padding: 0.85rem 1rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.3rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+input,
+button,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+input,
+select {
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fff;
+  padding: 0.58rem 0.65rem;
+}
+
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.52rem;
+}
+
+button {
+  border: 1px solid #c9d6ce;
+  border-radius: 9px;
+  background: #f7faf6;
+  padding: 0.48rem 0.72rem;
+  cursor: pointer;
+  transition: transform 120ms ease, background-color 120ms ease;
+}
+
+button:hover {
+  background: #e7f4ef;
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+.editor-shell {
+  overflow: clip;
+}
+
+.toolbar {
+  position: sticky;
+  top: 0.5rem;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(180deg, #fffdf8 0%, #f6f4ec 100%);
+}
+
+.toolbar-group {
+  display: flex;
+  gap: 0.35rem;
+  align-items: center;
+  padding-right: 0.45rem;
+  border-right: 1px solid #e1e5da;
+}
+
+.toolbar-group:last-child {
+  border-right: 0;
+  padding-right: 0;
+}
+
+.compact-label {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.tool,
+.tool-select {
+  padding: 0.35rem 0.58rem;
+  font-size: 0.84rem;
+  border-radius: 8px;
+}
+
+.tool {
+  min-width: 3.1rem;
+}
+
+.tool.is-active {
+  background: var(--brand-soft);
+  border-color: #9bcbbc;
+  color: #0c493b;
+}
+
+#editor {
+  min-height: 66vh;
+  padding: 1.5rem clamp(1rem, 2vw, 2rem) 2.2rem;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+  font-size: 1.08rem;
+  line-height: 1.7;
+  background: #fff;
+  outline: none;
+}
+
+#editor:empty::before {
+  content: attr(data-placeholder);
+  color: #9aa6ad;
+  pointer-events: none;
+}
+
+#editor h1,
+#editor h2,
+#editor h3 {
+  line-height: 1.25;
+}
+
+#editor blockquote {
+  margin: 1rem 0;
+  padding-left: 0.9rem;
+  border-left: 3px solid #bad1c5;
+  color: #475863;
+}
+
+#editor pre {
+  border: 1px solid #d7ddda;
+  background: #f8faf9;
+  border-radius: 10px;
+  padding: 0.75rem;
+  white-space: pre-wrap;
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.7rem;
+  padding: 0.6rem 0.95rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 760px) {
+  .app-shell {
+    padding: 0.65rem;
+  }
+
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .toolbar {
+    top: 0;
+  }
+
+  .toolbar-group {
+    border-right: 0;
+    padding-right: 0;
+  }
+
+  #editor {
+    min-height: 58vh;
+    font-size: 1rem;
+    line-height: 1.62;
+  }
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+
+  .topbar,
+  .doc-controls,
+  .toolbar,
+  .stats {
+    display: none;
+  }
+
+  .app-shell,
+  .editor-shell,
+  .card {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+    background: #fff;
+  }
+
+  #editor {
+    min-height: auto;
+    padding: 0;
+    font-size: 12pt;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
