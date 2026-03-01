@@ -525,6 +525,7 @@ function renderBalanceTable(summary) {
     tr.appendChild(paymentsCell);
 
     const balanceCell = document.createElement("td");
+    balanceCell.className = "balance-cell";
     const tag = document.createElement("span");
     tag.className = "tag";
     if (row.balance > 0.005) {

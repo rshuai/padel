@@ -273,6 +273,9 @@ function makeEmptyRow(colspan, text) {
 function renderPlayers(state, summary) {
   const playersMeta = document.getElementById("playersMeta");
   const playersList = document.getElementById("playersReadList");
+  if (!playersMeta || !playersList) {
+    return;
+  }
 
   playersList.innerHTML = "";
 
@@ -351,6 +354,7 @@ function renderBalanceTable(summary) {
     tr.appendChild(paymentsCell);
 
     const balanceCell = document.createElement("td");
+    balanceCell.className = "balance-cell";
     const tag = document.createElement("span");
     tag.className = "tag";
     if (row.balance > 0.005) {
