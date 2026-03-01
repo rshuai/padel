@@ -29,7 +29,7 @@ function createId(prefix) {
 
 function normalizeState(raw) {
   if (!raw || typeof raw !== "object") {
-    return { meName: "You", players: [], sessions: [], payments: [] };
+    return { meName: "You", updatedAt: "", players: [], sessions: [], payments: [] };
   }
 
   const players = Array.isArray(raw.players)
@@ -95,6 +95,7 @@ function normalizeState(raw) {
 
   return {
     meName: typeof raw.meName === "string" && raw.meName.trim() ? raw.meName.trim().slice(0, 50) : "You",
+    updatedAt: typeof raw.updatedAt === "string" ? raw.updatedAt : "",
     players,
     sessions,
     payments,
@@ -449,7 +450,18 @@ function renderStatus(state) {
     statusEl.textContent = "No saved tracker data found yet. Add data in the editable app first.";
     return;
   }
-  const refreshedAt = new Date().toLocaleString("en-GB", {
+  if (!state.updatedAt) {
+    statusEl.textContent = "Read-only snapshot. Last update not available.";
+    return;
+  }
+
+  const updatedAt = new Date(state.updatedAt);
+  if (Number.isNaN(updatedAt.getTime())) {
+    statusEl.textContent = "Read-only snapshot. Last update not available.";
+    return;
+  }
+
+  const formatted = updatedAt.toLocaleString("en-GB", {
     day: "2-digit",
     month: "short",
     year: "numeric",
@@ -457,7 +469,8 @@ function renderStatus(state) {
     minute: "2-digit",
     second: "2-digit",
   });
-  statusEl.textContent = `Read-only snapshot. Last update ${refreshedAt}.`;
+
+  statusEl.textContent = `Read-only snapshot. Last update ${formatted}.`;
 }
 
 async function renderAll() {

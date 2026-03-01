@@ -19,6 +19,10 @@ function todayIso() {
   return new Date().toISOString().slice(0, 10);
 }
 
+function nowIso() {
+  return new Date().toISOString();
+}
+
 function money(value) {
   return moneyFormatter.format(Number(value) || 0);
 }
@@ -37,6 +41,7 @@ function prettyDate(value) {
 function makeDefaultState() {
   return {
     meName: "You",
+    updatedAt: "",
     players: [
       { id: createId("player"), name: "Player A" },
       { id: createId("player"), name: "Player B" },
@@ -121,6 +126,7 @@ function normalizeState(raw) {
 
   return {
     meName: typeof raw.meName === "string" && raw.meName.trim() ? raw.meName.trim().slice(0, 50) : "You",
+    updatedAt: typeof raw.updatedAt === "string" ? raw.updatedAt : "",
     players,
     sessions,
     payments,
@@ -139,7 +145,10 @@ function loadState() {
   }
 }
 
-function saveState() {
+function saveState(shouldTouchUpdatedAt = true) {
+  if (shouldTouchUpdatedAt) {
+    state.updatedAt = nowIso();
+  }
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
@@ -165,8 +174,10 @@ async function loadSeededState() {
 }
 
 function exportStateJson() {
-  syncVisibleInputsIntoState();
-  saveState();
+  const hasInlineChanges = syncVisibleInputsIntoState();
+  if (hasInlineChanges) {
+    saveState();
+  }
   return JSON.stringify(getStateForExport(), null, 2);
 }
 
@@ -222,9 +233,15 @@ function setFeedback(elementId, message, isError = false) {
 }
 
 function syncVisibleInputsIntoState() {
+  let changed = false;
+
   const meNameInput = document.getElementById("meNameInput");
   if (meNameInput instanceof HTMLInputElement) {
-    state.meName = meNameInput.value.trim() || "You";
+    const nextMeName = meNameInput.value.trim() || "You";
+    if (state.meName !== nextMeName) {
+      state.meName = nextMeName;
+      changed = true;
+    }
   }
 
   document.querySelectorAll("#playersList input[data-player-id]").forEach((inputEl) => {
@@ -240,10 +257,13 @@ function syncVisibleInputsIntoState() {
       return;
     }
     const nextName = inputEl.value.trim();
-    if (nextName) {
+    if (nextName && player.name !== nextName.slice(0, 50)) {
       player.name = nextName.slice(0, 50);
+      changed = true;
     }
   });
+
+  return changed;
 }
 
 function getStateForExport() {
@@ -870,7 +890,7 @@ async function init() {
     const seededState = await loadSeededState();
     if (seededState) {
       state = seededState;
-      saveState();
+      saveState(false);
     }
   }
 
