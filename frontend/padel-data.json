@@ -1,19 +1,191 @@
 {
-  "meName": "You",
+  "meName": "Raymond",
   "players": [
     {
-      "id": "player_mm85olsn_xs36xs",
-      "name": "Player A"
+      "id": "player_mm6zmgk2_yyy2yb",
+      "name": "Glen"
     },
     {
-      "id": "player_mm85olsn_7b7m18",
-      "name": "Player B"
+      "id": "player_mm6zmgk2_5448j3",
+      "name": "Dan"
     },
     {
-      "id": "player_mm85olsn_rq1gd2",
-      "name": "Player C"
+      "id": "player_mm6zmgk2_c1uldy",
+      "name": "James"
+    },
+    {
+      "id": "player_mm820ldl_9d6j6c",
+      "name": "Ed"
     }
   ],
-  "sessions": [],
-  "payments": []
+  "sessions": [
+    {
+      "id": "session_mm82ao8h_e0mvp5",
+      "v": 2,
+      "date": "2026-02-28",
+      "payer": "me",
+      "playerIds": [
+        "me",
+        "player_mm6zmgk2_yyy2yb",
+        "player_mm6zmgk2_5448j3",
+        "player_mm6zmgk2_c1uldy"
+      ],
+      "note": ""
+    },
+    {
+      "id": "session_mm82a8ur_q18myy",
+      "v": 2,
+      "date": "2026-02-21",
+      "payer": "me",
+      "playerIds": [
+        "me",
+        "player_mm6zmgk2_yyy2yb",
+        "player_mm6zmgk2_5448j3",
+        "player_mm6zmgk2_c1uldy"
+      ],
+      "note": ""
+    },
+    {
+      "id": "session_mm82a2a7_o24ndd",
+      "v": 2,
+      "date": "2026-02-14",
+      "payer": "me",
+      "playerIds": [
+        "me",
+        "player_mm6zmgk2_yyy2yb",
+        "player_mm6zmgk2_5448j3",
+        "player_mm6zmgk2_c1uldy"
+      ],
+      "note": ""
+    },
+    {
+      "id": "session_mm829ve1_ugiqys",
+      "v": 2,
+      "date": "2026-02-07",
+      "payer": "me",
+      "playerIds": [
+        "me",
+        "player_mm6zmgk2_yyy2yb",
+        "player_mm6zmgk2_c1uldy",
+        "player_mm820ldl_9d6j6c"
+      ],
+      "note": ""
+    },
+    {
+      "id": "session_mm827ide_k52ymf",
+      "v": 2,
+      "date": "2026-01-17",
+      "payer": "me",
+      "playerIds": [
+        "me",
+        "player_mm6zmgk2_yyy2yb",
+        "player_mm6zmgk2_5448j3",
+        "player_mm6zmgk2_c1uldy"
+      ],
+      "note": ""
+    },
+    {
+      "id": "session_mm8255yz_li9863",
+      "v": 2,
+      "date": "2025-12-06",
+      "payer": "me",
+      "playerIds": [
+        "me",
+        "player_mm6zmgk2_yyy2yb",
+        "player_mm6zmgk2_5448j3",
+        "player_mm6zmgk2_c1uldy"
+      ],
+      "note": ""
+    }
+  ],
+  "payments": [
+    {
+      "id": "payment_mm82i7md_f4dstb",
+      "date": "2026-02-28",
+      "playerId": "player_mm6zmgk2_5448j3",
+      "direction": "to_me",
+      "amount": 12,
+      "note": ""
+    },
+    {
+      "id": "payment_mm82hphl_cuzuvf",
+      "date": "2026-02-28",
+      "playerId": "player_mm6zmgk2_c1uldy",
+      "direction": "to_me",
+      "amount": 36,
+      "note": ""
+    },
+    {
+      "id": "payment_mm82hdfc_rz2e6k",
+      "date": "2026-02-21",
+      "playerId": "player_mm6zmgk2_5448j3",
+      "direction": "to_me",
+      "amount": 12,
+      "note": ""
+    },
+    {
+      "id": "payment_mm82gzjt_x1ivym",
+      "date": "2026-02-23",
+      "playerId": "player_mm820ldl_9d6j6c",
+      "direction": "to_me",
+      "amount": 12,
+      "note": ""
+    },
+    {
+      "id": "payment_mm82gig2_rmxuje",
+      "date": "2026-02-22",
+      "playerId": "player_mm6zmgk2_yyy2yb",
+      "direction": "to_me",
+      "amount": 48,
+      "note": "For 4 sessions"
+    },
+    {
+      "id": "payment_mm82f8ko_umox5f",
+      "date": "2026-02-14",
+      "playerId": "player_mm6zmgk2_5448j3",
+      "direction": "to_me",
+      "amount": 12,
+      "note": ""
+    },
+    {
+      "id": "payment_mm82c7s0_xhs7bv",
+      "date": "2026-01-17",
+      "playerId": "player_mm6zmgk2_5448j3",
+      "direction": "to_me",
+      "amount": 12,
+      "note": ""
+    },
+    {
+      "id": "payment_mm82b57l_brng6i",
+      "date": "2026-01-17",
+      "playerId": "player_mm6zmgk2_c1uldy",
+      "direction": "to_me",
+      "amount": 12,
+      "note": ""
+    },
+    {
+      "id": "payment_mm826d9b_yuxmob",
+      "date": "2025-12-06",
+      "playerId": "player_mm6zmgk2_c1uldy",
+      "direction": "to_me",
+      "amount": 12,
+      "note": ""
+    },
+    {
+      "id": "payment_mm8262oa_nllb91",
+      "date": "2025-12-06",
+      "playerId": "player_mm6zmgk2_5448j3",
+      "direction": "to_me",
+      "amount": 12,
+      "note": ""
+    },
+    {
+      "id": "payment_mm825r6e_8b6eid",
+      "date": "2025-12-06",
+      "playerId": "player_mm6zmgk2_yyy2yb",
+      "direction": "to_me",
+      "amount": 48,
+      "note": "For 4 sessions"
+    }
+  ]
 }
