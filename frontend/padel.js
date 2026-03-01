@@ -1,6 +1,7 @@
 const STORAGE_KEY = "padel-payment-tracker-v1";
 const EDIT_AUTH_KEY = "padel-edit-auth-v1";
 const EDIT_PASSWORD = "tichosi";
+const SEEDED_DATA_URL = "/padel-data.json";
 const SESSION_COST = 48;
 const PLAYERS_PER_SESSION = 4;
 const SHARE_PER_PLAYER = SESSION_COST / PLAYERS_PER_SESSION;
@@ -140,6 +141,27 @@ function loadState() {
 
 function saveState() {
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function hasStoredState() {
+  try {
+    return Boolean(window.localStorage.getItem(STORAGE_KEY));
+  } catch {
+    return false;
+  }
+}
+
+async function loadSeededState() {
+  try {
+    const response = await fetch(SEEDED_DATA_URL, { cache: "no-store" });
+    if (!response.ok) {
+      return null;
+    }
+    const payload = await response.json();
+    return normalizeState(payload);
+  } catch {
+    return null;
+  }
 }
 
 function exportStateJson() {
@@ -770,10 +792,19 @@ function onClearImport() {
 
 let state = loadState();
 
-function init() {
+async function init() {
   if (!ensureEditAccess()) {
     return;
   }
+
+  if (!hasStoredState()) {
+    const seededState = await loadSeededState();
+    if (seededState) {
+      state = seededState;
+      saveState();
+    }
+  }
+
   renderAll();
   document.getElementById("addPlayerBtn").addEventListener("click", onAddPlayer);
   document.getElementById("newPlayerInput").addEventListener("keydown", (event) => {
@@ -797,4 +828,4 @@ function init() {
   document.getElementById("clearImportBtn").addEventListener("click", onClearImport);
 }
 
-init();
+void init();

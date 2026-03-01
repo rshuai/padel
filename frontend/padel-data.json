@@ -1,0 +1,19 @@
+{
+  "meName": "You",
+  "players": [
+    {
+      "id": "player_mm85olsn_xs36xs",
+      "name": "Player A"
+    },
+    {
+      "id": "player_mm85olsn_7b7m18",
+      "name": "Player B"
+    },
+    {
+      "id": "player_mm85olsn_rq1gd2",
+      "name": "Player C"
+    }
+  ],
+  "sessions": [],
+  "payments": []
+}

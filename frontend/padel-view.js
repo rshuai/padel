@@ -1,4 +1,5 @@
 const STORAGE_KEY = "padel-payment-tracker-v1";
+const SEEDED_DATA_URL = "/padel-data.json";
 const SESSION_COST = 48;
 const SHARE_PER_PLAYER = 12;
 
@@ -110,6 +111,42 @@ function loadState() {
   } catch {
     return normalizeState(null);
   }
+}
+
+function hasMeaningfulData(state) {
+  return Boolean(state.players.length || state.sessions.length || state.payments.length);
+}
+
+async function loadSeededState() {
+  try {
+    const response = await fetch(SEEDED_DATA_URL, { cache: "no-store" });
+    if (!response.ok) {
+      return null;
+    }
+    const payload = await response.json();
+    return normalizeState(payload);
+  } catch {
+    return null;
+  }
+}
+
+async function loadStateWithSeed() {
+  const localState = loadState();
+  if (hasMeaningfulData(localState)) {
+    return localState;
+  }
+
+  const seededState = await loadSeededState();
+  if (seededState && hasMeaningfulData(seededState)) {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(seededState));
+    } catch {
+      // Ignore storage failures and continue with in-memory seeded state.
+    }
+    return seededState;
+  }
+
+  return localState;
 }
 
 function getPlayerName(state, playerId) {
@@ -392,8 +429,8 @@ function renderStatus(state) {
   })}.`;
 }
 
-function renderAll() {
-  const state = loadState();
+async function renderAll() {
+  const state = await loadStateWithSeed();
   const summary = computeBalances(state);
   renderStatus(state);
   renderSummary(state, summary);
@@ -404,7 +441,7 @@ function renderAll() {
 }
 
 window.addEventListener("storage", () => {
-  renderAll();
+  void renderAll();
 });
 
-renderAll();
+void renderAll();
