@@ -1,4 +1,6 @@
 const STORAGE_KEY = "padel-payment-tracker-v1";
+const EDIT_AUTH_KEY = "padel-edit-auth-v1";
+const EDIT_PASSWORD = "tichosi";
 const SESSION_COST = 48;
 const PLAYERS_PER_SESSION = 4;
 const SHARE_PER_PLAYER = SESSION_COST / PLAYERS_PER_SESSION;
@@ -138,6 +140,30 @@ function loadState() {
 
 function saveState() {
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function ensureEditAccess() {
+  try {
+    if (window.sessionStorage.getItem(EDIT_AUTH_KEY) === "ok") {
+      return true;
+    }
+  } catch {
+    // Fall through to prompt-based auth check.
+  }
+
+  const input = window.prompt("Enter password to edit padel expenses:");
+  if (input === EDIT_PASSWORD) {
+    try {
+      window.sessionStorage.setItem(EDIT_AUTH_KEY, "ok");
+    } catch {
+      // Ignore storage errors and continue for current page load.
+    }
+    return true;
+  }
+
+  window.alert("Incorrect password. Redirecting to view-only mode.");
+  window.location.replace("/padel-view.html");
+  return false;
 }
 
 function getPlayerName(playerId) {
@@ -669,6 +695,9 @@ function onReset() {
 let state = loadState();
 
 function init() {
+  if (!ensureEditAccess()) {
+    return;
+  }
   renderAll();
   document.getElementById("addPlayerBtn").addEventListener("click", onAddPlayer);
   document.getElementById("newPlayerInput").addEventListener("keydown", (event) => {
