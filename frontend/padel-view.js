@@ -359,10 +359,10 @@ function renderBalanceTable(summary) {
     tag.className = "tag";
     if (row.balance > 0.005) {
       tag.classList.add("positive");
-      tag.textContent = `Owes you ${money(row.balance)}`;
+      tag.textContent = `Owes RSS ${money(row.balance)}`;
     } else if (row.balance < -0.005) {
       tag.classList.add("negative");
-      tag.textContent = `You owe ${money(Math.abs(row.balance))}`;
+      tag.textContent = `RSS owes ${money(Math.abs(row.balance))}`;
     } else {
       tag.classList.add("zero");
       tag.textContent = "Settled";
