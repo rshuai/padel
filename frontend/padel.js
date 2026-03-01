@@ -165,7 +165,9 @@ async function loadSeededState() {
 }
 
 function exportStateJson() {
-  return JSON.stringify(state, null, 2);
+  syncVisibleInputsIntoState();
+  saveState();
+  return JSON.stringify(getStateForExport(), null, 2);
 }
 
 function ensureEditAccess() {
@@ -219,6 +221,43 @@ function setFeedback(elementId, message, isError = false) {
   el.classList.toggle("error", Boolean(message) && isError);
 }
 
+function syncVisibleInputsIntoState() {
+  const meNameInput = document.getElementById("meNameInput");
+  if (meNameInput instanceof HTMLInputElement) {
+    state.meName = meNameInput.value.trim() || "You";
+  }
+
+  document.querySelectorAll("#playersList input[data-player-id]").forEach((inputEl) => {
+    if (!(inputEl instanceof HTMLInputElement)) {
+      return;
+    }
+    const playerId = inputEl.dataset.playerId;
+    if (!playerId) {
+      return;
+    }
+    const player = state.players.find((item) => item.id === playerId);
+    if (!player) {
+      return;
+    }
+    const nextName = inputEl.value.trim();
+    if (nextName) {
+      player.name = nextName.slice(0, 50);
+    }
+  });
+}
+
+function getStateForExport() {
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      return normalizeState(JSON.parse(raw));
+    }
+  } catch {
+    // Fall back to in-memory state below.
+  }
+  return normalizeState(state);
+}
+
 function applyResponsiveTableLabels() {
   document.querySelectorAll(".table-wrap table").forEach((table) => {
     const labels = Array.from(table.querySelectorAll("thead th")).map((headerCell) => headerCell.textContent.trim());
@@ -257,6 +296,7 @@ function renderPlayers() {
     input.type = "text";
     input.value = player.name;
     input.maxLength = 50;
+    input.dataset.playerId = player.id;
     input.addEventListener("change", () => {
       const value = input.value.trim();
       if (!value) {
@@ -850,6 +890,12 @@ async function init() {
   document.getElementById("importDataBtn").addEventListener("click", onImportData);
   document.getElementById("importFileInput").addEventListener("change", onImportFileChange);
   document.getElementById("clearImportBtn").addEventListener("click", onClearImport);
+  window.addEventListener("storage", (event) => {
+    if (event.key === STORAGE_KEY) {
+      state = loadState();
+      renderAll();
+    }
+  });
 }
 
 void init();
