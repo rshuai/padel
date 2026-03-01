@@ -19,6 +19,11 @@
   --shadow-hard-sm: 3px 3px 0 var(--ink);
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -36,6 +41,14 @@ body {
     linear-gradient(90deg, rgba(31, 42, 53, 0.08) 1px, transparent 1px),
     linear-gradient(160deg, var(--bg-cream), var(--bg-sand));
   background-size: 26px 26px, 26px 26px, auto;
+}
+
+img,
+svg,
+canvas,
+video {
+  max-width: 100%;
+  height: auto;
 }
 
 .atmosphere {
@@ -242,6 +255,19 @@ main {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 1rem;
+}
+
+.hero,
+main,
+.card,
+.table-wrap,
+table,
+.stats,
+.grid,
+.form-grid,
+.amount-wrap,
+.pill-grid {
+  min-width: 0;
 }
 
 .card {
@@ -739,7 +765,7 @@ body.view-only .players-card {
 @media (max-width: 900px) {
   .hero,
   main {
-    width: min(1180px, 95vw);
+    width: min(1180px, calc(100vw - 0.9rem));
   }
 
   .hero {
@@ -819,6 +845,7 @@ body.view-only .players-card {
     padding: 0.95rem;
     box-shadow: var(--shadow-hard-sm);
     grid-template-columns: 1fr;
+    border-width: var(--stroke-mid);
   }
 
   .hero h1 {
@@ -833,27 +860,12 @@ body.view-only .players-card {
   }
 
   .hero-graphics {
-    grid-column: 1;
-    grid-row: auto;
-    justify-self: end;
-    margin-top: 0.4rem;
-    gap: 0.45rem;
-    align-items: flex-start;
-  }
-
-  .graphic-court {
-    width: min(170px, 58vw);
-    max-width: 100%;
-    height: 48px;
-  }
-
-  .graphic-racket,
-  .graphic-ball {
     display: none;
   }
 
   .card {
     border-width: var(--stroke-mid);
+    box-shadow: 2px 2px 0 var(--ink);
   }
 
   .grid,
@@ -863,7 +875,7 @@ body.view-only .players-card {
   }
 
   .stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     gap: 0.62rem;
   }
 
@@ -877,7 +889,7 @@ body.view-only .players-card {
   }
 
   .pill-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
   }
 
   .pill-option {
@@ -894,7 +906,7 @@ body.view-only .players-card {
   select,
   textarea {
     min-height: 44px;
-    font-size: 0.98rem;
+    font-size: 1rem;
   }
 
   .table-wrap {
@@ -948,7 +960,7 @@ body.view-only .players-card {
     margin-bottom: 0.2rem;
     color: var(--ink-soft);
     font-family: "Bricolage Grotesque", "Space Grotesk", sans-serif;
-    font-size: 0.8rem;
+    font-size: 0.84rem;
     font-weight: 600;
     letter-spacing: 0.01em;
     text-transform: uppercase;
@@ -1002,7 +1014,7 @@ body.view-only .players-card {
 @media (max-width: 560px) {
   .hero,
   main {
-    width: min(1180px, 96vw);
+    width: min(1180px, calc(100vw - 0.55rem));
   }
 
   .hero {
@@ -1062,7 +1074,7 @@ body.view-only .players-card {
 @media (max-width: 420px) {
   .hero,
   main {
-    width: min(1180px, 97vw);
+    width: min(1180px, calc(100vw - 0.4rem));
   }
 
   .hero h1 {
@@ -1073,7 +1085,7 @@ body.view-only .players-card {
   .hint,
   label,
   .feedback {
-    font-size: 0.92rem;
+    font-size: 0.96rem;
   }
 
   .icon-delete-btn {
@@ -1082,6 +1094,6 @@ body.view-only .players-card {
   }
 
   table {
-    font-size: 0.91rem;
+    font-size: 0.95rem;
   }
 }
